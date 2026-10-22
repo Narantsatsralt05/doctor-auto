@@ -1,0 +1,1011 @@
+<title>Доктор Авто Ridgeback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: Apple-style long scroll. A pinned 3D stage takes the van apart as you scroll,
+   then alternating graphite / paper chapters with parallax: numbers, services bento,
+   a horizontally scrolling timeline, a safety counter, franchise, contact. */
+:root {
+  --ink: #0B0C0E;          /* stage + dark chapters */
+  --ink-2: #16191C;        /* dark cards */
+  --ink-3: #24282C;        /* dark hairlines */
+  --paper: #F2F3F4;        /* light chapters */
+  --paper-2: #FFFFFF;      /* light cards */
+  --on-dark: #F1F3F4;
+  --on-dark-muted: #8E979E;
+  --on-light: #111416;
+  --on-light-muted: #5A636A;
+  --signal: #FD0D1B;       /* Doctor Auto red (from cardoctor.mn header) */
+  --signal-deep: #D00A16;  /* same red, deepened for small text on paper */
+  --signal-ink: #FFFFFF;   /* text on red */
+  /* One family, Manrope, in three roles. Covers Mongolian Ө ө Ү ү (Cyrillic Extended). */
+  --display: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --label: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --gutter: max(16px, 5vw);
+  color-scheme: dark;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--ink); color: var(--on-dark); font-family: var(--body); font-size: 16px; line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; text-wrap: balance; letter-spacing: -0.035em; }
+p { margin: 0; }
+.tone-dark { background: var(--ink); color: var(--on-dark); }
+.tone-light { background: var(--paper); color: var(--on-light); }
+.wrap { padding-inline: var(--gutter); max-width: 1280px; margin-inline: auto; box-sizing: border-box; }
+.kicker { font: 700 12px/1 var(--label); letter-spacing: .14em; text-transform: uppercase; }
+.tone-dark .kicker { color: #FF4B55; }
+.tone-light .kicker { color: var(--signal-deep); }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+/* ---------- nav ---------- */
+.nav { position: fixed; z-index: 20; top: 0; left: 0; right: 0; padding-top: env(safe-area-inset-top, 0px);
+  background: rgba(253,13,27,.94); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px);
+  color: var(--signal-ink); box-shadow: 0 1px 0 rgba(0,0,0,.12); }
+.nav .wrap { height: 56px; display: flex; align-items: center; gap: 28px; }
+.logo { display: flex; align-items: center; text-decoration: none; flex: none; }
+.logo svg { height: 36px; width: auto; display: block; }
+.nav ul { list-style: none; display: flex; gap: 22px; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { font-size: 14px; font-weight: 500; text-decoration: none; opacity: .92; }
+.nav ul a:hover { opacity: 1; }
+.call { font: 600 13px/1 var(--body); text-decoration: none; padding: 9px 14px; border-radius: 999px; background: #fff; color: var(--signal-deep); white-space: nowrap; }
+@media (max-width: 860px) { .nav ul { display: none; } .call { margin-left: auto; } }
+
+/* ---------- pinned 3D teardown ---------- */
+.teardown { position: relative; height: 900vh; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  background: radial-gradient(70% 55% at 62% 68%, rgba(253,13,27,.16) 0%, rgba(253,13,27,0) 60%), radial-gradient(120% 80% at 60% 65%, #1A1E22 0%, var(--ink) 62%); }
+#car { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.layer { position: absolute; will-change: opacity, transform; }
+.hero { left: 0; right: 0; top: calc(13vh + 20px); text-align: center; padding-inline: var(--gutter); display: grid; gap: 14px; justify-items: center; }
+.hero h1 { font-size: clamp(46px, 8vw, 120px); line-height: .95; }
+.hero p { font-size: clamp(17px, 1.6vw, 22px); color: var(--on-dark-muted); max-width: 30ch; }
+.cue { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); font: 700 11px/1 var(--label); letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-muted); display: grid; justify-items: center; gap: 10px; }
+.cue i { width: 1px; height: 36px; background: linear-gradient(var(--on-dark-muted), transparent); }
+.side { left: var(--gutter); top: 50%; width: min(36vw, 460px); display: grid; gap: 14px; }
+.side h2 { font-size: clamp(40px, 5.4vw, 84px); line-height: .95; }
+.side p { font-size: clamp(16px, 1.3vw, 19px); color: var(--on-dark-muted); max-width: 34ch; }
+.side .svc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.side .svc span { font: 600 12px/1 var(--label); padding: 7px 10px; border-radius: 999px; border: 1px solid var(--ink-3); color: var(--on-dark); background: rgba(22,25,28,.6); }
+.center { left: 0; right: 0; top: calc(11vh + 20px); text-align: center; padding-inline: var(--gutter); display: grid; gap: 12px; justify-items: center; }
+.center h2 { font-size: clamp(44px, 7vw, 112px); line-height: .92; }
+.center p { color: var(--on-dark-muted); font-size: clamp(16px, 1.4vw, 20px); }
+.btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+.btn { font: 600 15px/1 var(--body); padding: 14px 22px; border-radius: 999px; text-decoration: none; border: 1px solid transparent; }
+.btn.solid { background: var(--signal); color: var(--signal-ink); }
+.btn.ghost { border-color: var(--ink-3); color: var(--on-dark); }
+.rail { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; transition: opacity .3s; }
+.rail li { display: flex; align-items: center; gap: 10px; justify-content: flex-end; font: 700 11px/1 var(--label); letter-spacing: .08em; text-transform: uppercase; color: var(--on-dark-muted); transition: color .3s; }
+.rail li::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); transition: background .3s, transform .3s; }
+.rail li.on { color: var(--on-dark); }
+.rail li.on::after { background: var(--signal); transform: scale(1.6); }
+@media (max-width: 860px) {
+  .side { left: var(--gutter); right: var(--gutter); width: auto; top: auto; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); gap: 8px; }
+  .side h2 { font-size: 40px; }
+  .side p { font-size: 15px; }
+  .rail { display: none; }
+  .hero { top: calc(11vh + 10px); }
+  .center { top: calc(9vh + 14px); }
+}
+
+/* ---------- chapters ---------- */
+.chapter { padding-block: clamp(96px, 16vh, 180px); position: relative; overflow: hidden; }
+.lead { display: grid; gap: 18px; max-width: 900px; }
+.lead h2 { font-size: clamp(44px, 7vw, 104px); line-height: .92; }
+.lead p { font-size: clamp(18px, 1.8vw, 24px); max-width: 36ch; }
+.tone-light .lead p { color: var(--on-light-muted); }
+.tone-dark .lead p { color: var(--on-dark-muted); }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 5vw, 72px) clamp(20px, 3vw, 48px); margin-top: clamp(56px, 10vh, 110px); }
+.stat { border-top: 1px solid #D3D8DB; padding-top: 18px; display: grid; gap: 8px; }
+.stat .n { font: 800 clamp(52px, 7vw, 112px)/.9 var(--display); font-variant-numeric: tabular-nums; letter-spacing: -0.04em; will-change: transform; }
+.stat .n small { font-size: .38em; letter-spacing: 0; margin-left: 4px; }
+.stat .l { color: var(--on-light-muted); font-size: 15px; max-width: 26ch; }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(210px, auto); gap: 14px; margin-top: clamp(48px, 8vh, 90px); }
+.card { background: var(--ink-2); border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; min-width: 0;
+  transform: translateY(var(--rise, 0px)); transition: transform .9s cubic-bezier(.2,.7,.1,1); }
+.card h3 { font-size: clamp(24px, 2.2vw, 32px); line-height: 1.02; }
+.card p { color: var(--on-dark-muted); font-size: 15px; max-width: 34ch; }
+.card .tag { margin-top: auto; font: 700 11px/1 var(--label); letter-spacing: .1em; text-transform: uppercase; color: #FF5A63; }
+.card.big { grid-column: span 2; grid-row: span 2; justify-content: flex-end; background: linear-gradient(160deg, #1D2226 0%, #101214 70%); }
+.card.big .num { font: 800 clamp(80px, 10.5vw, 170px)/.85 var(--display); letter-spacing: -0.045em; color: var(--on-dark); will-change: transform; }
+.card.big .num span { color: var(--signal); }
+.card.wide { grid-column: span 2; }
+.card.chev { background: linear-gradient(135deg, #1B1F23, #121416); }
+.chev-mark { width: 74px; height: 26px; position: relative; margin-bottom: 6px; }
+.chev-mark::before { content: ""; position: absolute; inset: 0; background: var(--on-dark); clip-path: polygon(0 34%, 36% 34%, 36% 0, 64% 0, 64% 34%, 100% 34%, 100% 66%, 64% 66%, 64% 100%, 36% 100%, 36% 66%, 0 66%); opacity: .14; }
+@media (max-width: 960px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .bento { grid-template-columns: minmax(0, 1fr); } .card.big, .card.wide { grid-column: auto; grid-row: auto; } }
+
+/* history: pinned horizontal track */
+.history { position: relative; height: 420vh; }
+.history .pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(28px, 5vh, 56px); }
+.history .ghost { position: absolute; left: 0; bottom: -2vh; font: 800 clamp(160px, 30vw, 460px)/.8 var(--display); color: #E2E6E8; white-space: nowrap; pointer-events: none; will-change: transform; letter-spacing: -0.045em; }
+.history .head { position: relative; display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.history .head h2 { font-size: clamp(40px, 6vw, 92px); line-height: .92; }
+.history .head p { color: var(--on-light-muted); max-width: 30ch; }
+.track { position: relative; display: flex; gap: 18px; padding-inline: var(--gutter); will-change: transform; width: max-content; }
+.year { width: min(78vw, 360px); flex: none; background: var(--paper-2); border-radius: 22px; padding: 26px; box-sizing: border-box; display: grid; gap: 14px; align-content: start; min-height: 260px; box-shadow: 0 1px 0 rgba(0,0,0,.04); }
+.year b { font: 800 clamp(56px, 6vw, 84px)/.9 var(--display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.year b.range { font-size: clamp(40px, 4.2vw, 58px); }
+.year p { color: var(--on-light-muted); font-size: 16px; }
+.year.goal { background: var(--on-light); color: var(--paper); }
+.year.goal p { color: #AEB6BC; }
+.year.goal b span { color: var(--signal); }
+.bar { position: relative; margin-inline: var(--gutter); height: 2px; background: #D6DBDE; border-radius: 2px; }
+.bar i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--signal-deep); border-radius: 2px; }
+
+/* safety counter */
+.safety { position: relative; height: 300vh; }
+.safety .pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; gap: clamp(20px, 4vh, 40px); overflow: hidden; }
+.counter { font: 800 clamp(64px, 14vw, 230px)/.85 var(--display); letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+.counter-l { color: var(--on-dark-muted); font-size: clamp(17px, 1.6vw, 22px); max-width: 40ch; }
+.years { display: flex; gap: 10px; flex-wrap: wrap; }
+.years span { font: 600 13px/1 var(--label); padding: 9px 12px; border-radius: 999px; border: 1px solid var(--ink-3); color: var(--on-dark-muted); transition: all .35s; }
+.years span.on { border-color: var(--signal); color: var(--signal-ink); background: var(--signal); }
+.iso { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.iso div { border-top: 1px solid var(--ink-3); padding-top: 14px; display: grid; gap: 6px; }
+.iso b { font: 800 22px/1 var(--display); }
+.iso span { color: var(--on-dark-muted); font-size: 14px; }
+@media (max-width: 700px) { .iso { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+
+/* franchise */
+.towns { margin-top: clamp(56px, 9vh, 96px); display: grid; gap: 6px; }
+.towns .row { display: flex; gap: 40px; white-space: nowrap; font: 800 clamp(44px, 7vw, 110px)/1 var(--display); letter-spacing: -0.04em; will-change: transform; }
+.towns .row.outline { color: transparent; -webkit-text-stroke: 1.2px #B9C1C6; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: clamp(48px, 8vh, 90px); }
+.fact { background: var(--paper-2); border-radius: 22px; padding: 26px; display: grid; gap: 8px; align-content: start; }
+.fact b { font: 800 clamp(44px, 5vw, 72px)/.9 var(--display); letter-spacing: -0.04em; }
+.fact p { color: var(--on-light-muted); font-size: 15px; }
+.fine { color: var(--on-light-muted); font-size: 13px; margin-top: 18px; max-width: 70ch; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; align-items: center; }
+.btn.dark { background: var(--on-light); color: var(--paper); }
+.mail { font: 600 14px/1 var(--label); color: var(--on-light-muted); user-select: all; }
+@media (max-width: 760px) { .facts { grid-template-columns: minmax(0, 1fr); } }
+
+/* footer */
+.foot { padding-block: clamp(96px, 16vh, 160px) 40px; }
+.foot h2 { font-size: clamp(56px, 11vw, 170px); line-height: .88; }
+.foot-logo { width: clamp(180px, 22vw, 300px); height: auto; color: var(--signal); display: block; margin-bottom: clamp(28px, 5vh, 48px); }
+.cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; margin-top: clamp(48px, 8vh, 90px); border-top: 1px solid var(--ink-3); padding-top: 28px; }
+.cols h4 { margin: 0 0 10px; font: 700 11px/1 var(--label); letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-muted); }
+.cols p, .cols a { font-size: 15px; line-height: 1.6; display: block; text-decoration: none; overflow-wrap: anywhere; }
+.cols a:hover { color: var(--signal); }
+.legal { margin-top: 48px; color: var(--on-dark-muted); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; justify-content: space-between; }
+@media (max-width: 860px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+
+.rise { transform: translateY(28px); transition: transform 1s cubic-bezier(.2,.7,.1,1); }
+.rise.in { transform: none; }
+@media (prefers-reduced-motion: reduce) { .rise { transform: none; transition: none; } }
+.webgl-off { position: absolute; inset: auto 0 18vh; text-align: center; color: var(--on-dark-muted); padding-inline: var(--gutter); }
+</style>
+
+<nav class="nav" id="nav" aria-label="Үндсэн цэс">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Доктор Авто Сүлжээ"><svg viewBox="0 0 960 320" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M96 1l1-1l171 0l1 1l-1 1l-34 59l-16 27l-9-3l-11-3l-16-2l-18 3l-17 5zM86 6l1-1l1 2l50 86l-14 12l-11 15l-6 13l-3 7l-2 14l-49 1l-53-1zM147 104l70 0l9 2l8 3l7 4l6 4l6 7l6 10l4 15l1 8l-1 9l-2 9l-2 6l-6 10l-6 7l-11 8l-9 4l-8 2l-11 1l-60 0l-1-1zM323 104l45 0l15 3l9 4l9 6l5 6l7 11l2 6l2 11l0 11l-2 12l-5 12l-8 11l-9 7l-12 6l-10 3l-41 0l-8-1l-9-2l-9-4l-7-4l-8-9l-6-9l-5-14l-1-13l1-13l4-13l7-9l10-9l12-6zM477 104l70 0l0 18l-62 1l-10 1l-7 3l-6 4l-6 6l-4 8l-2 11l0 7l1 6l4 9l7 8l8 5l7 2l38 1l32 0l0 19l-61 0l-10-1l-14-4l-11-6l-10-11l-6-11l-3-10l-1-15l1-11l4-12l6-10l11-9l12-6zM559 104l105 0l0 18l-43 1l0 47l0 42l-1 1l-17 0l-1-90l-43-1zM721 104l45 0l15 3l9 4l7 5l7 7l7 10l3 12l1 7l0 10l-2 12l-5 12l-8 11l-9 7l-12 6l-10 3l-42 0l-7-1l-9-2l-9-4l-9-6l-8-9l-5-9l-4-12l-1-13l1-13l4-12l6-10l11-9l12-6zM829 104l79 0l14 1l13 4l7 4l7 6l4 7l2 6l2 11l-1 7l-3 9l-3 5l-6 7l-6 4l-11 5l0 1l31 31l0 1l-27 0l-30-30l-41-1l-1-7l1-12l53 0l7-1l7-3l5-3l3-6l2-7l-2-8l-4-7l-4-2l-5-2l-11-1l-62 0l-1 1l0 88l-1 1l-17 0l-1-1zM166 123l47 0l6 1l5 2l8 4l5 6l4 6l2 6l1 7l0 10l-2 8l-2 5l-5 6l-9 6l-9 3l-51 1zM327 123l36 0l10 1l7 3l6 3l7 9l4 9l1 7l0 10l-3 10l-4 6l-8 7l-9 4l-6 2l-45-1l-12-5l-6-5l-5-7l-3-8l-1-10l1-9l3-8l5-7l7-6l9-4zM724 123l37 0l10 1l7 3l6 4l7 8l4 9l1 8l-1 13l-2 6l-5 7l-7 6l-9 4l-6 2l-45-1l-12-5l-7-6l-4-6l-3-7l-1-10l1-11l3-7l4-6l8-7l9-4zM0 166l2-1l100 0l2 12l3 10l6 13l11 15l14 12l-32 55l-18 31l-1 2l-1-1zM147 231l1 0l8 3l10 3l16 2l17-2l10-3l8-3l1 0l51 87l-1 1l-41 0l-130 0l-1-1l4-6zM627 240l10 1l8 3l5 5l3 8l0 13l-2 8l-7 6l-5 2l-6 1l-8 0l-7-2l-3-2l-5-5l-3-5l0-4l0-11l3-8l2-3l5-4l6-2zM712 240l10 1l6 2l5 5l3 6l-12 3l-2-4l-4-2l-4 0l-3 1l-2 2l-2 5l0 10l2 5l3 2l6 1l4-3l3-6l5 2l7 2l-2 4l-2 4l-3 3l-8 4l-11 0l-5-1l-6-3l-4-5l-2-4l-2-6l0-9l2-6l2-4l5-5l4-2zM443 241l15 0l1 1l17 44l-1 1l-13 0l-1-1l-2-6l-16-1l-3 8l-13 0l-1-1zM489 241l14 0l1 30l1 3l3 2l7 0l4-4l0-31l14 0l0 11l0 16l-1 7l-2 4l-3 4l-3 2l-7 2l-11 0l-5-1l-3-1l-5-4l-2-4l-1-4zM550 241l43 0l0 11l-13 0l-1 1l0 19l0 14l-1 1l-13 0l0-34l-1-1l-14 0zM755 241l13 0l1 15l1 1l14 0l1-16l13 0l0 45l-1 1l-12 0l-1-1l0-17l-1-1l-14 0l0 18l-1 1l-13 0zM831 241l15 0l2 3l16 42l-1 1l-13 0l-1-1l-2-6l-15-1l-1 1l-3 7l-13 0l-1-1zM880 241l14 0l0 46l-13 0l-1-1zM915 241l13 0l17 24l1-24l13 0l0 45l-1 1l-12 0l-17-25l0 24l-1 1l-12 0l-1-1zM627 251l5 0l3 1l2 2l2 4l0 12l-2 4l-4 3l-5 0l-3-2l-3-2l-1-5l0-8l1-4l2-3zM451 254l4 14l0 1l-3 0l-6 0l4-13zM839 254l0-1l0 1l5 14l-1 1l-3 0l-6 0z"/></svg></a>
+    <ul>
+      <li><a href="#services">Үйлчилгээ</a></li>
+      <li><a href="#history">Түүх</a></li>
+      <li><a href="#safety">Аюулгүй байдал</a></li>
+      <li><a href="#franchise">Франчайз</a></li>
+      <li><a href="#contact">Холбоо барих</a></li>
+    </ul>
+    <a class="call" href="tel:18001937">1800-1937</a>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- 1. Pinned 3D teardown -->
+  <section class="teardown" id="teardown" data-tone="dark" aria-label="Машины оношилгоо">
+    <div class="stage">
+      <canvas id="car" aria-label="Гүйлгэх тусам задарч, буцаж угсрагдах автомашины 3D загвар"></canvas>
+
+      <div class="layer hero" data-range="-1,0.085">
+        <span class="kicker">Доктор Авто Сүлжээ · 1999 оноос</span>
+        <h1>Замдаа жаргалтай.</h1>
+        <p>Автомашин дахь амьдралыг аз жаргалтай болгоход тусална.</p>
+      </div>
+      <div class="cue layer" data-range="-1,0.04" aria-hidden="true">Доош гүйлгэнэ үү<i></i></div>
+
+      <div class="layer side" data-range="0.10,0.29">
+        <span class="kicker">Оношилгоо</span>
+        <h2>Машин бүрийг задлан харна.</h2>
+        <p>Хөдөлгүүрээс хаалга хүртэл систем бүрийг шалгаж, юу хэрэгтэйг хэлж өгнө.</p>
+      </div>
+
+      <div class="layer side" data-range="0.30,0.40" data-stop="0">
+        <span class="kicker">Техник үйлчилгээ</span>
+        <h2>Хөдөлгүүр</h2>
+        <p>Тос, шүүлтүүр, хөргөлт. Тогтмол үйлчилгээг цагт нь хийнэ.</p>
+        <div class="svc"><span>4000+ нэр төрлийн сэлбэг</span><span>Автосупермаркет</span></div>
+      </div>
+      <div class="layer side" data-range="0.40,0.50" data-stop="1">
+        <span class="kicker">Засвар, тохируулга</span>
+        <h2>Тоормос ба явах эд анги</h2>
+        <p>Тоормос, түдгэлзүүр, дугуйг шалгаж, засаж, тохируулна.</p>
+        <div class="svc"><span>Засвар</span><span>Тохируулга</span></div>
+      </div>
+      <div class="layer side" data-range="0.50,0.60" data-stop="2">
+        <span class="kicker">Тусгай үйлчилгээ</span>
+        <h2>Аккумлятор ба асаалт</h2>
+        <p>Асаалт, түлхүүр, хальс зэрэг 20 орчим нэр төрлийн тусгай мэргэжлийн үйлчилгээ.</p>
+        <div class="svc"><span>Асаалт</span><span>Түлхүүр</span><span>Хальс</span></div>
+      </div>
+      <div class="layer side" data-range="0.60,0.70" data-stop="3">
+        <span class="kicker">Улсын үзлэг</span>
+        <h2>Утаа ба үзлэг</h2>
+        <p>Жил бүр заавал хийлгэх улсын үзлэгээ нэг дороос.</p>
+        <div class="svc"><span>Жил бүр</span><span>Нэг дор</span></div>
+      </div>
+      <div class="layer side" data-range="0.70,0.80" data-stop="4">
+        <span class="kicker">Хальс, түлхүүр</span>
+        <h2>Их бие ба салон</h2>
+        <p>Цонхны хальс, түлхүүр хувилах болон бусад тусгай үйлчилгээ.</p>
+        <div class="svc"><span>Цонхны хальс</span><span>Түлхүүр</span></div>
+      </div>
+
+      <div class="layer center" data-range="0.81,0.92">
+        <span class="kicker">17 салбар · жилд 850,000 зочин</span>
+        <h2>Бүгдийг нэг дор.</h2>
+      </div>
+      <div class="layer center" data-range="0.925,2">
+        <span class="kicker">Доктор Авто Сүлжээ</span>
+        <h2>Машинаа Доктортоо үзүүл.</h2>
+        <p>Салбартаа ирэх эсвэл 1800-1937 дугаарт залгаарай.</p>
+        <div class="btns"><a class="btn solid" href="tel:18001937">1800-1937 руу залгах</a><a class="btn ghost" href="#services">Үйлчилгээ үзэх</a></div>
+      </div>
+
+      <ol class="rail" id="rail" aria-hidden="true">
+        <li>Хөдөлгүүр</li><li>Тоормос</li><li>Аккумлятор</li><li>Үзлэг</li><li>Их бие</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2. Numbers -->
+  <section class="chapter tone-light" data-tone="light" aria-labelledby="numbers-h">
+    <div class="wrap">
+      <div class="lead rise">
+        <span class="kicker">25 гаруй жил</span>
+        <h2 id="numbers-h">1999 онд нэг дэлгүүрээс эхэлсэн.</h2>
+        <p>Өнөөдөр Монгол, Казахстанд салбартай автын сүлжээ.</p>
+      </div>
+      <div class="stats">
+        <div class="stat" data-speed="-0.03"><div class="n">1999</div><div class="l">Анхны Доктор автосупермаркет нээгдсэн он</div></div>
+        <div class="stat" data-speed="-0.05"><div class="n">17</div><div class="l">Салбар нэгж, 2025 оны байдлаар</div></div>
+        <div class="stat" data-speed="-0.07"><div class="n">850<small>мянга</small></div><div class="l">Жилд үйлчлүүлдэг зочин</div></div>
+        <div class="stat" data-speed="-0.04"><div class="n">4000+</div><div class="l">Нэр төрлийн автын бараа</div></div>
+        <div class="stat" data-speed="-0.06"><div class="n">105</div><div class="l">Дэлхийн брэнд</div></div>
+        <div class="stat" data-speed="-0.08"><div class="n">500</div><div class="l">Салбартай болох зорилго, 2035 он</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Services -->
+  <section class="chapter tone-dark" id="services" data-tone="dark" aria-labelledby="svc-h">
+    <div class="wrap">
+      <div class="lead rise">
+        <span class="kicker">Бүтээгдэхүүн & үйлчилгээ</span>
+        <h2 id="svc-h">Сэлбэгээс засвар хүртэл.</h2>
+        <p>Машинд хэрэгтэй бүхэн нэг сүлжээнд.</p>
+      </div>
+      <div class="bento">
+        <article class="card big rise">
+          <div class="num" data-speed="-0.05">4000<span>+</span></div>
+          <h3>Автосупермаркет</h3>
+          <p>Дэлхийн 105 брэндийн 4000 гаруй нэр төрлийн бараа.</p>
+        </article>
+        <article class="card wide chev rise">
+          <h3>Шевроле брэндийн албан ёсны дистрибьютор</h3>
+          <p>Сүлжээний анхны Шевроле шоурум 2024 онд нээгдсэн.</p>
+        </article>
+        <article class="card rise"><h3>Техник үйлчилгээ</h3><p>Тогтмол үйлчилгээ, тос, шүүлтүүр.</p><span class="tag">Хөдөлгүүр</span></article>
+        <article class="card rise"><h3>Засвар, тохируулга</h3><p>Тоормос, явах эд анги, тохируулга.</p><span class="tag">Явах эд анги</span></article>
+        <article class="card rise"><h3>Улсын үзлэг</h3><p>Жил бүр заавал хийлгэх ёстой улсын үзлэг.</p><span class="tag">Жил бүр</span></article>
+        <article class="card rise"><h3>Тусгай үйлчилгээ</h3><p>Асаалт, хальс, түлхүүр зэрэг 20 орчим төрөл.</p><span class="tag">20 төрөл</span></article>
+        <article class="card rise"><h3>Бөөний худалдаа</h3><p>Автын барааны бөөний худалдааны сүлжээ.</p><span class="tag">Бизнест</span></article>
+        <article class="card rise"><h3>Интернет худалдаа</h3><p>Автын бараагаа онлайнаар захиална.</p><span class="tag">Онлайн</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. History: horizontal -->
+  <section class="history tone-light" id="history" data-tone="light" aria-labelledby="hist-h">
+    <div class="pin">
+      <div class="ghost" aria-hidden="true">1999 — 2035</div>
+      <div class="wrap head">
+        <div style="display:grid;gap:14px">
+          <span class="kicker">Бидний түүх</span>
+          <h2 id="hist-h">Нэг дэлгүүрээс<br>500 салбар руу.</h2>
+        </div>
+        <p>Улаанбаатараас аймгууд, тэндээсээ Казахстан хүртэл.</p>
+      </div>
+      <div class="track" id="track">
+        <div class="year"><b>1999</b><p>Анхны Доктор автосупермаркет нээгдэв.</p></div>
+        <div class="year"><b class="range">2004–2016</b><p>Улаанбаатар хотод 5 салбартай болов.</p></div>
+        <div class="year"><b class="range">2013–2016</b><p>Засгийн газар, МҮХАҮТ-аас шилдэг 100 татвар төлөгч, нийгмийн хариуцлагатай компаниар шалгарав.</p></div>
+        <div class="year"><b>2016</b><p>Эрдэнэт, Дарханд салбар нээж, ЕСБХБ-аас хөгжлийн санхүүжилт авав.</p></div>
+        <div class="year"><b>2017</b><p>Татварын байгууллагаас шилдэг татвар төлөгчөөр шагнагдав.</p></div>
+        <div class="year"><b>2018</b><p>ЕСБХБ-ны Blue Ribbon хөтөлбөрт сонгогдсон анхны монгол компани.</p></div>
+        <div class="year"><b>2020</b><p>Мөрөн, Замын-Үүдэд франчайз салбар нээв.</p></div>
+        <div class="year"><b>2024</b><p>Казахстанд анхны салбар, сүлжээний анхны Шевроле шоурум нээв.</p></div>
+        <div class="year goal"><b>2035<span>.</span></b><p>Дэлхий даяар 500 салбартай болох зорилго.</p></div>
+      </div>
+      <div class="bar" aria-hidden="true"><i id="hbar"></i></div>
+    </div>
+  </section>
+
+  <!-- 5. Safety -->
+  <section class="safety tone-dark" id="safety" data-tone="dark" aria-labelledby="safe-h">
+    <div class="pin wrap">
+      <span class="kicker">Аюулгүй Доктор</span>
+      <h2 id="safe-h" class="counter" aria-label="2 сая хүн-цаг"><span id="count">0</span></h2>
+      <p class="counter-l">хүн-цаг ноцтой осол, эрүүл мэндийн хохиролгүй ажилласан. 2024 оны үр дүн.</p>
+      <div class="years" id="years"><span data-at="1.2">2022 · 1.2 сая</span><span data-at="1.5">2023 · 1.5 сая</span><span data-at="2.0">2024 · 2 сая</span></div>
+      <div class="iso">
+        <div><b>ISO 9001</b><span>Чанарын менежментийн тогтолцоо</span></div>
+        <div><b>ISO 14001</b><span>Байгаль орчны менежмент. Франчайз салбаруудын хаягдал тос, аккумляторын 100% тусгай зөвшөөрөлтэй дахин боловсруулагчид очдог.</span></div>
+        <div><b>ISO 45001</b><span>Хөдөлмөрийн эрүүл мэнд, аюулгүй байдал</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Franchise -->
+  <section class="chapter tone-light" id="franchise" data-tone="light" aria-labelledby="fr-h">
+    <div class="wrap">
+      <div class="lead rise">
+        <span class="kicker">Франчайз боломж</span>
+        <h2 id="fr-h">Өөрийн Доктороо нээ.</h2>
+        <p>25 жил боловсруулсан бэлэн бизнес. Сургалт, нээлтээс тогтворжих хүртэл дэмжлэг.</p>
+      </div>
+    </div>
+    <div class="towns" aria-label="Боломжит байршил">
+      <div class="row" data-drift="-1">Арвайхээр · Цэцэрлэг · Мандалговь · Хархорин · Тосонцэнгэл · Арвайхээр · Цэцэрлэг ·</div>
+      <div class="row outline" data-drift="1">Зуунмод · Алтай · Баруун-Урт · Булган · Улаан-Уул · Зуунмод · Алтай ·</div>
+    </div>
+    <div class="wrap">
+      <div class="facts">
+        <div class="fact rise"><b>3.6 жил</b><p>Хөрөнгө оруулалт нөхөх урьдчилсан хугацаа</p></div>
+        <div class="fact rise"><b>10 хот</b><p>Франчайз нээх боломжит байршил</p></div>
+        <div class="fact rise"><b>0</b><p>Автын салбарт ажилласан туршлага шаардлагагүй</p></div>
+      </div>
+      <p class="fine">Тооцоо нь урьдчилсан бөгөөд бодит үр дүн өөр байж болно.</p>
+      <div class="cta-row">
+        <a class="btn dark" href="https://www.cardoctor.mn/franchise" target="_blank" rel="noopener">Франчайзын дэлгэрэнгүй</a>
+        <span class="mail">zoljargal@zigzag.mn</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Contact -->
+  <footer class="foot tone-dark" id="contact" data-tone="dark">
+    <div class="wrap">
+      <svg class="foot-logo rise" viewBox="0 0 960 320" role="img" aria-label="Доктор Авто Сүлжээ"><path fill="currentColor" fill-rule="evenodd" d="M96 1l1-1l171 0l1 1l-1 1l-34 59l-16 27l-9-3l-11-3l-16-2l-18 3l-17 5zM86 6l1-1l1 2l50 86l-14 12l-11 15l-6 13l-3 7l-2 14l-49 1l-53-1zM147 104l70 0l9 2l8 3l7 4l6 4l6 7l6 10l4 15l1 8l-1 9l-2 9l-2 6l-6 10l-6 7l-11 8l-9 4l-8 2l-11 1l-60 0l-1-1zM323 104l45 0l15 3l9 4l9 6l5 6l7 11l2 6l2 11l0 11l-2 12l-5 12l-8 11l-9 7l-12 6l-10 3l-41 0l-8-1l-9-2l-9-4l-7-4l-8-9l-6-9l-5-14l-1-13l1-13l4-13l7-9l10-9l12-6zM477 104l70 0l0 18l-62 1l-10 1l-7 3l-6 4l-6 6l-4 8l-2 11l0 7l1 6l4 9l7 8l8 5l7 2l38 1l32 0l0 19l-61 0l-10-1l-14-4l-11-6l-10-11l-6-11l-3-10l-1-15l1-11l4-12l6-10l11-9l12-6zM559 104l105 0l0 18l-43 1l0 47l0 42l-1 1l-17 0l-1-90l-43-1zM721 104l45 0l15 3l9 4l7 5l7 7l7 10l3 12l1 7l0 10l-2 12l-5 12l-8 11l-9 7l-12 6l-10 3l-42 0l-7-1l-9-2l-9-4l-9-6l-8-9l-5-9l-4-12l-1-13l1-13l4-12l6-10l11-9l12-6zM829 104l79 0l14 1l13 4l7 4l7 6l4 7l2 6l2 11l-1 7l-3 9l-3 5l-6 7l-6 4l-11 5l0 1l31 31l0 1l-27 0l-30-30l-41-1l-1-7l1-12l53 0l7-1l7-3l5-3l3-6l2-7l-2-8l-4-7l-4-2l-5-2l-11-1l-62 0l-1 1l0 88l-1 1l-17 0l-1-1zM166 123l47 0l6 1l5 2l8 4l5 6l4 6l2 6l1 7l0 10l-2 8l-2 5l-5 6l-9 6l-9 3l-51 1zM327 123l36 0l10 1l7 3l6 3l7 9l4 9l1 7l0 10l-3 10l-4 6l-8 7l-9 4l-6 2l-45-1l-12-5l-6-5l-5-7l-3-8l-1-10l1-9l3-8l5-7l7-6l9-4zM724 123l37 0l10 1l7 3l6 4l7 8l4 9l1 8l-1 13l-2 6l-5 7l-7 6l-9 4l-6 2l-45-1l-12-5l-7-6l-4-6l-3-7l-1-10l1-11l3-7l4-6l8-7l9-4zM0 166l2-1l100 0l2 12l3 10l6 13l11 15l14 12l-32 55l-18 31l-1 2l-1-1zM147 231l1 0l8 3l10 3l16 2l17-2l10-3l8-3l1 0l51 87l-1 1l-41 0l-130 0l-1-1l4-6zM627 240l10 1l8 3l5 5l3 8l0 13l-2 8l-7 6l-5 2l-6 1l-8 0l-7-2l-3-2l-5-5l-3-5l0-4l0-11l3-8l2-3l5-4l6-2zM712 240l10 1l6 2l5 5l3 6l-12 3l-2-4l-4-2l-4 0l-3 1l-2 2l-2 5l0 10l2 5l3 2l6 1l4-3l3-6l5 2l7 2l-2 4l-2 4l-3 3l-8 4l-11 0l-5-1l-6-3l-4-5l-2-4l-2-6l0-9l2-6l2-4l5-5l4-2zM443 241l15 0l1 1l17 44l-1 1l-13 0l-1-1l-2-6l-16-1l-3 8l-13 0l-1-1zM489 241l14 0l1 30l1 3l3 2l7 0l4-4l0-31l14 0l0 11l0 16l-1 7l-2 4l-3 4l-3 2l-7 2l-11 0l-5-1l-3-1l-5-4l-2-4l-1-4zM550 241l43 0l0 11l-13 0l-1 1l0 19l0 14l-1 1l-13 0l0-34l-1-1l-14 0zM755 241l13 0l1 15l1 1l14 0l1-16l13 0l0 45l-1 1l-12 0l-1-1l0-17l-1-1l-14 0l0 18l-1 1l-13 0zM831 241l15 0l2 3l16 42l-1 1l-13 0l-1-1l-2-6l-15-1l-1 1l-3 7l-13 0l-1-1zM880 241l14 0l0 46l-13 0l-1-1zM915 241l13 0l17 24l1-24l13 0l0 45l-1 1l-12 0l-17-25l0 24l-1 1l-12 0l-1-1zM627 251l5 0l3 1l2 2l2 4l0 12l-2 4l-4 3l-5 0l-3-2l-3-2l-1-5l0-8l1-4l2-3zM451 254l4 14l0 1l-3 0l-6 0l4-13zM839 254l0-1l0 1l5 14l-1 1l-3 0l-6 0z"/></svg>
+      <h2 class="rise">Замдаа<br>жаргалтай.</h2>
+      <div class="cols">
+        <div><h4>Төв оффис</h4><p>Улаанбаатар хот, Баянгол дүүрэг, 16-р хороо, Амарсанаагийн гудамж-68</p></div>
+        <div><h4>Холбоо барих</h4><a href="tel:18001937">1800-1937</a><a href="mailto:info@zigzag.mn">info@zigzag.mn</a></div>
+        <div><h4>Ажиллах боломж</h4><a href="https://forms.gle/2ZdC8Mkx3nMQBT9L6" target="_blank" rel="noopener">Аттестатчилал өгч ажиллах</a><a href="https://forms.gle/5UHzHvvtoMRHE2hW7" target="_blank" rel="noopener">Дадлагажигчаар ажиллах</a><a href="mailto:hr@zigzag.mn">hr@zigzag.mn</a></div>
+        <div><h4>Биднийг дагаарай</h4><a href="https://www.instagram.com/cardoctormn/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/cardoctormn/" target="_blank" rel="noopener">Facebook</a><a href="https://mn.linkedin.com/company/doctorautochain" target="_blank" rel="noopener">LinkedIn</a><a href="http://news.cardoctor.mn" target="_blank" rel="noopener">Мэдээ мэдээлэл</a></div>
+      </div>
+      <div class="legal"><span>© 2026 "Доктор Авто Чэйн" ХХК</span><span>ISO 9001 · ISO 14001 · ISO 45001</span></div>
+    </div>
+  </footer>
+</main>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (x, a = 0, b = 1) => Math.min(Math.max(x, a), b);
+const ease = x => { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+
+/* =========================================================
+   Page parallax (works even if WebGL is unavailable)
+   ========================================================= */
+const nav = document.getElementById('nav');
+const toneSections = [...document.querySelectorAll('[data-tone]')];
+const speedEls = [...document.querySelectorAll('[data-speed]')];
+const driftEls = [...document.querySelectorAll('[data-drift]')];
+const history = document.getElementById('history'), track = document.getElementById('track'), hbar = document.getElementById('hbar'), ghost = history.querySelector('.ghost');
+const safety = document.getElementById('safety'), countEl = document.getElementById('count'), yearChips = [...document.querySelectorAll('#years span')];
+const fmt = new Intl.NumberFormat('en-US');
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.rise').forEach(el => io.observe(el));
+
+function pinProgress(el) {
+  const r = el.getBoundingClientRect();
+  return clamp(-r.top / (r.height - innerHeight));
+}
+function pageParallax() {
+  const vh = innerHeight;
+  // nav tone follows the chapter under it
+  if (reduce) return;
+  for (const el of speedEls) {
+    const r = el.parentElement.getBoundingClientRect();
+    if (r.bottom < -200 || r.top > vh + 200) continue;
+    el.style.transform = `translate3d(0, ${((r.top + r.height / 2) - vh / 2) * parseFloat(el.dataset.speed)}px, 0)`;
+  }
+  for (const el of driftEls) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < -200 || r.top > vh + 200) continue;
+    const k = (r.top - vh) / (vh + r.height);
+    el.style.transform = `translate3d(${k * 40 * parseFloat(el.dataset.drift)}vw, 0, 0)`;
+  }
+}
+function historyScroll() {
+  const p = pinProgress(history);
+  const max = Math.max(0, track.scrollWidth - innerWidth);
+  track.style.transform = `translate3d(${-p * max}px, 0, 0)`;
+  hbar.style.width = (p * 100) + '%';
+  if (!reduce) ghost.style.transform = `translate3d(${-p * 35}vw, 0, 0)`;
+}
+function safetyScroll() {
+  const p = clamp(pinProgress(safety) / 0.8);
+  const v = ease(p) * 2.0;
+  countEl.textContent = fmt.format(Math.round(v * 1e6 / 1000) * 1000);
+  for (const c of yearChips) c.classList.toggle('on', v >= parseFloat(c.dataset.at) - 1e-6);
+}
+
+/* =========================================================
+   3D teardown
+   ========================================================= */
+const teardown = document.getElementById('teardown');
+const canvas = document.getElementById('car');
+const layers = [...teardown.querySelectorAll('.layer')].map(el => ({ el, r: el.dataset.range.split(',').map(Number) }));
+const railItems = [...document.querySelectorAll('#rail li')], rail = document.getElementById('rail');
+
+let renderer = null;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); }
+catch (e) {
+  const d = document.createElement('p'); d.className = 'webgl-off';
+  d.textContent = 'Энэ хөтөч дээр 3D загвар ачаалагдсангүй. Хөтчийн тохиргооноос hardware acceleration-ийг асаагаарай.';
+  teardown.querySelector('.stage').append(d);
+}
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+let accent = new THREE.Color('#FD0D1B');
+
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.setClearColor(0x000000, 0);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+}
+scene.add(new THREE.HemisphereLight(0xffffff, 0x30363b, 0.5));
+const key = new THREE.DirectionalLight(0xffffff, 2.2);
+key.position.set(4, 10, 6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
+key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02; scene.add(key);
+const rimL = new THREE.DirectionalLight(0xff6b6b, 1.0); rimL.position.set(-6, 3, -5); scene.add(rimL);
+const groundMat = new THREE.ShadowMaterial({ opacity: 0.55 });
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), groundMat);
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const ringMat = new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.45 });
+{
+  const ring = new THREE.Mesh(new THREE.RingGeometry(3.55, 3.57, 160), ringMat);
+  ring.rotation.x = -Math.PI / 2; ring.position.y = 0.002; scene.add(ring);
+  for (let i = 0; i < 72; i++) {
+    const a = i / 72 * Math.PI * 2, long = i % 6 === 0;
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(long ? 0.22 : 0.1, 0.012), ringMat);
+    m.rotation.set(-Math.PI / 2, 0, a);
+    const r = 3.7 + (long ? 0.11 : 0.05);
+    m.position.set(Math.cos(a) * r, 0.002, -Math.sin(a) * r);
+    scene.add(m);
+  }
+}
+
+/* ================= Ridgeback Wagon: teardown model =================
+   Exterior ported from the "Ridgeback Wagon 3D" artifact (three r128 → r160).
+   Internals (engine, cooling, battery, exhaust, brakes, suspension, interior)
+   fitted to its dimensions so the shell can come apart.                    */
+
+/* r128 read hex colours as linear values; keep that so the wagon looks the same */
+const lin = (hex) => new THREE.Color().setHex(hex, THREE.LinearSRGBColorSpace);
+/* r128 used legacy light units; scale this scene's key and fill to match */
+key.intensity = 2.8;
+scene.traverse(o => { if (o.isHemisphereLight) o.intensity = 0.8; });
+
+/* ---------- Studio environment for reflections (softboxes in a grey room) ---------- */
+if (renderer) {
+  const env = new THREE.Scene();
+  const basic = (hex, k = 1, side = THREE.FrontSide) => { const m = new THREE.MeshBasicMaterial({ color: lin(hex), side }); m.color.multiplyScalar(k); return m; };
+  const room = new THREE.Mesh(new THREE.BoxGeometry(30, 14, 30), basic(0x5a5f5e, 1, THREE.BackSide));
+  room.position.y = 5; env.add(room);
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), basic(0x2a2c2c));
+  fl.rotation.x = -Math.PI / 2; fl.position.y = -1.9; env.add(fl);
+  const top = new THREE.Mesh(new THREE.PlaneGeometry(12, 5), basic(0xffffff, 5, THREE.DoubleSide)); top.rotation.x = Math.PI / 2; top.position.set(0, 11.5, 0); env.add(top);
+  [[-14, 0], [14, Math.PI]].forEach(([x, r]) => { const s = new THREE.Mesh(new THREE.PlaneGeometry(10, 1.6), basic(0xffffff, 3.2, THREE.DoubleSide)); s.position.set(x, 4, 0); s.rotation.y = Math.PI / 2 + r; env.add(s); });
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(16, 2), basic(0xffffff, 2.2, THREE.DoubleSide)); back.position.set(0, 5, -14.5); env.add(back);
+  const front = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), basic(0xffffff, 1.6, THREE.DoubleSide)); front.position.set(0, 3, 14.5); front.rotation.y = Math.PI; env.add(front);
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(env, 0.03).texture;
+}
+
+/* ---------- Wagon materials (same values as the original) ---------- */
+const W = {
+  paint: new THREE.MeshPhysicalMaterial({ color: lin(0xf3f3ef), metalness: 0.15, roughness: 0.38, clearcoat: 1, clearcoatRoughness: 0.04 }),
+  trim: new THREE.MeshPhysicalMaterial({ color: lin(0x232625), roughness: 0.62, metalness: 0, clearcoat: 0.15 }),
+  gloss: new THREE.MeshPhysicalMaterial({ color: lin(0x0b0c0c), roughness: 0.12, metalness: 0.2, clearcoat: 1, clearcoatRoughness: 0.03 }),
+  glass: new THREE.MeshPhysicalMaterial({ color: lin(0x07090a), roughness: 0.05, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.0 }),
+  tyre: new THREE.MeshStandardMaterial({ color: lin(0x1a1b1b), roughness: 0.88 }),
+  steel: new THREE.MeshPhysicalMaterial({ color: lin(0xc8cbcd), roughness: 0.28, metalness: 0.9, clearcoat: 0.6 }),
+  gun: new THREE.MeshPhysicalMaterial({ color: lin(0x5b6064), roughness: 0.3, metalness: 0.85 }),
+  lens: new THREE.MeshPhysicalMaterial({ color: lin(0xdfe7ee), roughness: 0.05, metalness: 0.6, clearcoat: 1 }),
+  led: new THREE.MeshStandardMaterial({ color: lin(0xffffff), emissive: lin(0xe8f1ff), emissiveIntensity: 1.4 }),
+  tail: new THREE.MeshPhysicalMaterial({ color: lin(0x7d0b0b), emissive: lin(0x2a0202), roughness: 0.08, metalness: 0.2, clearcoat: 1 }),
+  liner: new THREE.MeshStandardMaterial({ color: lin(0x101111), roughness: 1, side: THREE.DoubleSide }),
+  seam: new THREE.MeshBasicMaterial({ color: lin(0x3a3d3c) }),
+};
+for (const k in W) W[k].envMapIntensity = k === 'glass' ? 0.55 : k === 'tyre' ? 0.25 : k === 'trim' ? 0.5 : 1.1;
+
+function wadd(geo, mat, x = 0, y = 0, z = 0, parent) { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m; }
+function rrect(w, h, r) {
+  const s = new THREE.Shape(), x = -w / 2, y = -h / 2; r = Math.min(r, w / 2, h / 2);
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+}
+function wbox(w, h, d, r) {
+  r = Math.min(r, w / 2 - 0.002, h / 2 - 0.002, d / 2 - 0.002);
+  const g = new THREE.ExtrudeGeometry(rrect(w - 2 * r, h - 2 * r, r * 0.8), { depth: Math.max(d - 2 * r, 0.001), bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelSegments: 5, curveSegments: 8 });
+  g.center(); g.computeVertexNormals(); return g;
+}
+function wbody(shape, width, bt, bs, mat, parent) {
+  const g = new THREE.ExtrudeGeometry(shape, { depth: width - 2 * bt, bevelEnabled: true, bevelThickness: bt, bevelSize: bs, bevelSegments: 8, curveSegments: 28 });
+  g.translate(0, 0, -(width - 2 * bt) / 2); g.computeVertexNormals(); return wadd(g, mat, 0, 0, 0, parent);
+}
+
+/* ---------- Internals: materials and helpers ---------- */
+const std = (o) => () => new THREE.MeshStandardMaterial(o);
+const finCanvas = document.createElement('canvas'); finCanvas.width = 256; finCanvas.height = 32;
+{ const c = finCanvas.getContext('2d'); c.fillStyle = '#a3aab0'; c.fillRect(0, 0, 256, 32); c.fillStyle = '#4b5258';
+  for (let x = 0; x < 256; x += 4) c.fillRect(x, 0, 1.4, 32); }
+const finTex = new THREE.CanvasTexture(finCanvas); finTex.wrapS = finTex.wrapT = THREE.RepeatWrapping; finTex.repeat.set(5, 1); finTex.colorSpace = THREE.SRGBColorSpace;
+const M = {
+  trim: std({ color: 0x17191b, roughness: 0.55, metalness: 0.1 }),
+  steel: std({ color: 0x7f868d, roughness: 0.36, metalness: 0.85 }),
+  dark: std({ color: 0x3a3f44, roughness: 0.5, metalness: 0.7 }),
+  alu: std({ color: 0xaeb4ba, roughness: 0.3, metalness: 0.9 }),
+  block: std({ color: 0x6a7178, roughness: 0.45, metalness: 0.75 }),
+  chrome: std({ color: 0xe9ecef, roughness: 0.12, metalness: 1 }),
+  caliper: std({ color: 0xc4262e, roughness: 0.35, metalness: 0.2 }),
+  spring: std({ color: 0x4a6178, roughness: 0.4, metalness: 0.5 }),
+  hv: std({ color: 0xf07a1a, roughness: 0.45 }),
+  pack: std({ color: 0x9aa3aa, roughness: 0.35, metalness: 0.7 }),
+  seat: std({ color: 0x45494d, roughness: 0.72 }),
+  seatIn: std({ color: 0x60656a, roughness: 0.78 }),
+  screen: std({ color: 0x0b1a1f, emissive: 0x2fb3bd, emissiveIntensity: 0.55, roughness: 0.2 }),
+  fin: () => new THREE.MeshStandardMaterial({ map: finTex, metalness: 0.55, roughness: 0.5 }),
+};
+const rbox = (w, h, d, r = 0.03, seg = 3) => new RoundedBoxGeometry(w, h, d, seg, Math.min(r, Math.min(w, h, d) / 2 - 1e-4));
+function mesh(geo, mat, pos, rot) {
+  const m = new THREE.Mesh(geo, mat());
+  if (pos) m.position.set(pos[0], pos[1], pos[2]);
+  if (rot) m.rotation.set(rot[0], rot[1], rot[2]);
+  return m;
+}
+function put(g, ...ms) { ms.forEach(m => g.add(m)); return g; }
+function tube(points, r, mat, seg = 64) {
+  const curve = new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(...p)));
+  return new THREE.Mesh(new THREE.TubeGeometry(curve, seg, r, 10, false), mat());
+}
+const Y_AXIS = new THREE.Vector3(0, 1, 0);
+function cylBetween(a, b, r, mat) {
+  const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), dir = B.clone().sub(A);
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, dir.length(), 16), mat());
+  m.position.copy(A).add(B).multiplyScalar(0.5);
+  m.quaternion.setFromUnitVectors(Y_AXIS, dir.normalize());
+  return m;
+}
+const cylZ = (r, h, mat, pos, open = false, seg = 40) => mesh(new THREE.CylinderGeometry(r, r, h, seg, 1, open), mat, pos, [Math.PI / 2, 0, 0]);
+const cylX = (r, h, mat, pos, seg = 32) => mesh(new THREE.CylinderGeometry(r, r, h, seg), mat, pos, [0, 0, Math.PI / 2]);
+
+/* ---------- parts registry: each part moves through staged offsets ---------- */
+const parts = [], meshes = [];
+const LIFT = [[0, 0.6, 0], 0.08, 0.30];          // whole car rises off the floor first
+const BODY = [[0, 1.6, 0], 0.22, 0.50];          // body shell lifts off the chassis
+function part(obj, sys, stages) {
+  obj.userData.base = obj.position.clone();
+  parts.push({ obj, stages: [LIFT, ...stages].map(([o, a, b]) => ({ o: new THREE.Vector3(...o), a, b })) });
+  obj.traverse(o => {
+    if (!o.isMesh) return;
+    o.material = o.material.clone();              // own material, so it can be ghosted on its own
+    o.userData.system = sys; o.castShadow = true; o.receiveShadow = true;
+    o.userData.baseEmissive = o.material.emissive ? o.material.emissive.clone() : null;
+    o.userData.baseEI = o.material.emissiveIntensity ?? 1;
+    meshes.push(o);
+  });
+  scene.add(obj);
+  return obj;
+}
+/* soft contact shadow under the wagon (from the original), fades as it lifts */
+let contact = null;
+{
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  const gr = x.createRadialGradient(128, 128, 10, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,0.55)'); gr.addColorStop(0.6, 'rgba(0,0,0,0.25)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = gr; x.fillRect(0, 0, 256, 256);
+  contact = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 2.9), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  contact.rotation.x = -Math.PI / 2; contact.position.y = 0.003; scene.add(contact);
+}
+function updateParts(t) {
+  for (const p of parts) {
+    const pos = p.obj.userData.base.clone();
+    for (const s of p.stages) pos.addScaledVector(s.o, ease((t - s.a) / (s.b - s.a)));
+    p.obj.position.copy(pos);
+  }
+  contact.material.opacity = 1 - 0.85 * ease(t / 0.3);
+}
+
+/* ================= Exterior (Ridgeback Wagon) ================= */
+const WB = 2.85, XF = 1.52, XR = XF - WB, R = 0.39, ARCH_Y = 0.41, WZ = 0.84;
+
+/* Body shell: main body with arch cut-outs, glasshouse, roof, pillars, trim, mirrors, liners */
+const shell = new THREE.Group();
+{
+  const b = 0.08, yb = 0.52 + b, ar = 0.45 + b, a0 = Math.asin((yb - ARCH_Y) / ar), dx = Math.sqrt(ar * ar - (yb - ARCH_Y) ** 2);
+  const s = new THREE.Shape();
+  s.moveTo(-2.37, yb + 0.12);
+  s.quadraticCurveTo(-2.37, yb, -2.24, yb);
+  s.lineTo(XR - dx, yb); s.absarc(XR, ARCH_Y, ar, Math.PI - a0, a0, true);
+  s.lineTo(XF - dx, yb); s.absarc(XF, ARCH_Y, ar, Math.PI - a0, a0, true);
+  s.lineTo(2.28, yb); s.quadraticCurveTo(2.42, yb, 2.42, yb + 0.16);
+  s.lineTo(2.42, 0.9); s.quadraticCurveTo(2.43, 1.07, 2.26, 1.1);
+  s.quadraticCurveTo(1.7, 1.19, 1.1, 1.24);
+  s.lineTo(-2.18, 1.26); s.quadraticCurveTo(-2.37, 1.27, -2.37, 1.1);
+  s.lineTo(-2.37, yb + 0.12);
+  wbody(s, 1.98, 0.12, b, W.paint, shell);
+}
+{
+  const s = new THREE.Shape();
+  s.moveTo(1.04, 1.24); s.quadraticCurveTo(0.7, 1.55, 0.48, 1.76); s.quadraticCurveTo(0.40, 1.82, 0.28, 1.82);
+  s.lineTo(-2.06, 1.84); s.quadraticCurveTo(-2.2, 1.84, -2.22, 1.72); s.lineTo(-2.26, 1.24);
+  wbody(s, 1.80, 0.07, 0.05, W.glass, shell);
+}
+{
+  const s = new THREE.Shape();
+  s.moveTo(0.36, 1.84); s.quadraticCurveTo(0.42, 1.84, 0.44, 1.88); s.quadraticCurveTo(0.4, 1.9, 0.3, 1.9);
+  s.lineTo(-2.12, 1.9); s.quadraticCurveTo(-2.22, 1.9, -2.24, 1.84); s.lineTo(0.36, 1.84);
+  wbody(s, 1.80, 0.07, 0.04, W.paint, shell);
+}
+{
+  const s = new THREE.Shape();
+  s.moveTo(-2.0, 1.24); s.lineTo(-2.04, 1.78); s.quadraticCurveTo(-2.06, 1.85, -2.14, 1.85); s.lineTo(-2.2, 1.85); s.quadraticCurveTo(-2.25, 1.8, -2.27, 1.6); s.lineTo(-2.3, 1.24);
+  wbody(s, 1.82, 0.07, 0.04, W.paint, shell);
+}
+wadd(wbox(0.03, 0.4, 1.34, 0.012), W.glass, -2.385, 1.57, 0, shell);
+[1, -1].forEach(sd => { wadd(wbox(0.12, 0.56, 0.03, 0.012), W.gloss, -0.33, 1.54, sd * 0.905, shell); wadd(wbox(0.07, 0.55, 0.03, 0.012), W.gloss, -1.62, 1.54, sd * 0.905, shell); });
+wadd(wbox(0.012, 0.012, 0.5, 0.005), W.trim, -2.405, 1.4, 0.18, shell);
+const lipGeo = new THREE.TorusGeometry(0.455, 0.016, 10, 48, Math.PI + 0.62);
+[1, -1].forEach(sd => {
+  const z = sd * 0.991;
+  [0.36, -0.94].forEach(x => { const m = wadd(new THREE.PlaneGeometry(0.006, 0.62), W.seam, x, 0.95, z, shell); m.rotation.y = sd > 0 ? 0 : Math.PI; });
+  [0.02, -1.26].forEach(x => wadd(wbox(0.2, 0.04, 0.03, 0.014), W.paint, x, 1.12, sd * 1.0, shell));
+  wadd(wbox(3.15, 0.018, 0.018, 0.008), W.gun, -0.6, 1.275, sd * 0.905, shell);
+  wadd(wbox(0.11, 0.17, 0.2, 0.05), W.paint, 0.78, 1.42, sd * 1.07, shell);
+  wadd(wbox(0.12, 0.05, 0.14, 0.02), W.trim, 0.8, 1.32, sd * 1.0, shell);
+  [XF, XR].forEach(x => { const l = wadd(lipGeo, W.trim, x, ARCH_Y, sd * 0.975, shell); l.rotation.z = -0.31; });
+});
+[[XF, WZ], [XF, -WZ], [XR, WZ], [XR, -WZ]].forEach(p => {
+  const sd = Math.sign(p[1]);
+  wadd(new THREE.CylinderGeometry(0.45, 0.45, 0.36, 40, 1, true).rotateX(Math.PI / 2), W.liner, p[0], ARCH_Y, sd * 0.79, shell);
+  wadd(new THREE.CircleGeometry(0.45, 40), W.liner, p[0], ARCH_Y, sd * 0.61, shell).rotation.y = sd > 0 ? 0 : Math.PI;
+  wadd(wbox(0.025, 0.26, 0.24, 0.012), W.trim, p[0] - 0.52, 0.33, sd * 0.86, shell);
+});
+part(shell, 'body', [BODY]);
+
+/* Sill cladding and side steps come off sideways */
+[1, -1].forEach(sd => {
+  const g = new THREE.Group();
+  wadd(wbox(1.56, 0.09, 0.04, 0.015), W.trim, XR + WB / 2 - 0.02, 0.58, sd * 0.985, g);
+  wadd(wbox(1.6, 0.03, 0.16, 0.012), W.trim, XR + WB / 2 - 0.02, 0.47, sd * 0.93, g);
+  part(g, 'body', [[[0, 0, sd * 0.45], 0.04, 0.22]]);
+});
+
+/* Snorkel swings out, then rides up with the body */
+{
+  const g = new THREE.Group();
+  const curve = new THREE.CatmullRomCurve3([[1.5, 0.82, 1.04], [1.38, 1.04, 1.06], [1.12, 1.3, 1.03], [0.82, 1.6, 0.99], [0.6, 1.86, 0.96]].map(p => new THREE.Vector3(...p)));
+  wadd(new THREE.TubeGeometry(curve, 80, 0.055, 16, false), W.trim, 0, 0, 0, g);
+  wadd(wbox(0.32, 0.1, 0.15, 0.045), W.trim, 0.6, 1.9, 0.96, g);
+  wadd(wbox(0.22, 0.2, 0.025, 0.05), W.trim, 1.5, 0.9, 1.0, g);
+  part(g, 'body', [[[0, 0.05, 0.5], 0.02, 0.2], BODY]);
+}
+
+/* Front end: grille, lamps, bumper, skid plate */
+{
+  const g = new THREE.Group();
+  wadd(wbox(0.07, 0.38, 1.22, 0.05), W.gloss, 2.47, 0.84, 0, g);
+  for (let i = 0; i < 4; i++) wadd(wbox(0.03, 0.022, 1.14, 0.01), W.gun, 2.51, 0.72 + i * 0.085, 0, g);
+  [1, -1].forEach(sd => {
+    wadd(wbox(0.1, 0.13, 0.36, 0.05), W.lens, 2.44, 1.0, sd * 0.76, g);
+    wadd(wbox(0.02, 0.018, 0.3, 0.008), W.led, 2.5, 0.955, sd * 0.76, g);
+    wadd(wbox(0.04, 0.06, 0.15, 0.03), W.lens, 2.47, 0.6, sd * 0.8, g);
+  });
+  wadd(wbox(0.18, 0.2, 1.9, 0.03), W.trim, 2.36, 0.56, 0, g);
+  wadd(wbox(0.3, 0.04, 1.0, 0.015), W.gun, 2.22, 0.44, 0, g);
+  part(g, 'body', [[[0.95, 0, 0], 0.02, 0.24]]);
+}
+/* Rear end: lamps, bumper, hitch */
+{
+  const g = new THREE.Group();
+  [1, -1].forEach(sd => { wadd(wbox(0.12, 0.16, 0.38, 0.05), W.tail, -2.41, 1.1, sd * 0.78, g); wadd(wbox(0.03, 0.03, 0.3, 0.012), W.tail, -2.47, 1.07, sd * 0.78, g); });
+  wadd(wbox(0.04, 0.04, 1.0, 0.018), W.gun, -2.46, 1.12, 0, g);
+  wadd(wbox(0.16, 0.2, 1.98, 0.03), W.trim, -2.4, 0.56, 0, g);
+  wadd(wbox(0.12, 0.08, 0.16, 0.03), W.gun, -2.52, 0.42, 0, g);
+  part(g, 'body', [[[-0.75, 0, 0], 0.04, 0.24]]);
+}
+
+class Helix extends THREE.Curve {
+  constructor(r, y0, y1, turns) { super(); Object.assign(this, { r, y0, y1, turns }); }
+  getPoint(t, out = new THREE.Vector3()) { const a = t * this.turns * Math.PI * 2; return out.set(Math.cos(a) * this.r, this.y0 + t * (this.y1 - this.y0), Math.sin(a) * this.r); }
+}
+/* Wheels: lathed tyre and steel rim, exactly as the original */
+const tyreGeo = new THREE.LatheGeometry([[0.25, -0.13], [0.33, -0.136], [0.368, -0.128], [0.386, -0.1], [0.392, -0.04], [0.392, 0.04], [0.386, 0.1], [0.368, 0.128], [0.33, 0.136], [0.25, 0.13]].map(p => new THREE.Vector2(p[0], p[1])), 64).rotateX(Math.PI / 2);
+const rimGeo = new THREE.LatheGeometry([[0.0, 0.105], [0.09, 0.105], [0.11, 0.092], [0.19, 0.086], [0.222, 0.11], [0.252, 0.124], [0.256, 0.115], [0.25, -0.1]].map(p => new THREE.Vector2(p[0], p[1])), 48).rotateX(Math.PI / 2);
+const capGeo = new THREE.SphereGeometry(0.07, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2).rotateX(Math.PI / 2).scale(1, 1, 0.5);
+const slotGeo = wbox(0.075, 0.05, 0.02, 0.02);
+const grooveGeo = new THREE.TorusGeometry(0.392, 0.006, 6, 64);
+const boltGeo = new THREE.CylinderGeometry(0.012, 0.012, 0.03, 8).rotateX(Math.PI / 2);
+[[XF, WZ], [XF, -WZ], [XR, WZ], [XR, -WZ]].forEach(([x, z]) => {
+  const sd = Math.sign(z);
+  const g = new THREE.Group(); g.position.set(x, R, z); if (z < 0) g.rotation.y = Math.PI;
+  wadd(tyreGeo, W.tyre, 0, 0, 0, g);
+  [-0.05, 0.05].forEach(o => wadd(grooveGeo, W.liner, 0, 0, o, g));
+  wadd(rimGeo, W.steel, 0, 0, 0, g);
+  wadd(capGeo, W.steel, 0, 0, 0.105, g);
+  for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; const s = wadd(slotGeo, W.liner, Math.cos(a) * 0.155, Math.sin(a) * 0.155, 0.09, g); s.rotation.z = a + Math.PI / 2; }
+  for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; wadd(boltGeo, W.gun, Math.cos(a) * 0.06, Math.sin(a) * 0.06, 0.11, g); }
+  part(g, 'suspension', [[[0, 0, sd * 0.85], 0.62, 0.86]]);
+
+  /* brake: disc, hub, caliper */
+  const brake = new THREE.Group(); brake.position.set(x, R, sd * 0.66);
+  brake.add(cylZ(0.17, 0.026, M.steel, [0, 0, 0]));
+  brake.add(cylZ(0.085, 0.06, M.dark, [0, 0, sd * 0.03]));
+  brake.add(mesh(rbox(0.13, 0.17, 0.08, 0.02), M.caliper, [-0.095, 0.095, 0], [0, 0, Math.PI / 4]));
+  part(brake, 'brakes', [[[0, 0, sd * 0.50], 0.66, 0.90]]);
+
+  /* coil-over strut */
+  const strut = new THREE.Group(); strut.position.set(x, R, sd * 0.53); strut.rotation.x = -sd * 0.08;
+  put(strut,
+    mesh(rbox(0.10, 0.22, 0.08, 0.02), M.dark, [0, 0, sd * 0.08]),
+    mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.42, 16), M.steel, [0, 0.33, 0]),
+    mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.22, 12), M.chrome, [0, 0.64, 0]),
+    mesh(new THREE.TubeGeometry(new Helix(0.075, 0.40, 0.70, 5.5), 160, 0.012, 8), M.spring),
+    mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.03, 24), M.dark, [0, 0.72, 0]));
+  part(strut, 'suspension', [[[0, 0.12, sd * 0.26], 0.70, 0.94]]);
+});
+
+/* Ladder frame, live axles and driveshaft (a 4×4 chassis) */
+{
+  const g = new THREE.Group();
+  for (const sd of [1, -1]) g.add(mesh(rbox(4.3, 0.10, 0.08, 0.02), M.dark, [-0.05, 0.46, sd * 0.48]));
+  for (const x of [-2.05, -0.95, 0.15, 1.05, 2.0]) g.add(mesh(rbox(0.08, 0.07, 0.96, 0.02), M.dark, [x, 0.46, 0]));
+  for (const x of [XF, XR]) {
+    g.add(cylBetween([x, R, -0.64], [x, R, 0.64], 0.045, M.steel));
+    g.add(mesh(new THREE.SphereGeometry(0.11, 24, 16), M.alu, [x, R, 0.08]));
+  }
+  g.add(cylBetween([1.62, 0.47, 0.02], [XF + 0.05, R + 0.02, 0.08], 0.03, M.steel));
+  g.add(cylBetween([1.62, 0.47, 0.02], [XR + 0.08, R + 0.02, 0.08], 0.03, M.steel));
+  part(g, 'suspension', []);
+}
+
+/* ================= Internals ================= */
+/* Engine and transmission */
+const engine = new THREE.Group();
+put(engine,
+  mesh(rbox(0.40, 0.34, 0.58, 0.03), M.block, [1.86, 0.74, 0.12]),
+  mesh(rbox(0.36, 0.11, 0.56, 0.03), M.alu, [1.86, 0.965, 0.12]),
+  mesh(rbox(0.30, 0.08, 0.52, 0.03), M.trim, [1.86, 1.06, 0.12]),
+  mesh(rbox(0.36, 0.10, 0.50, 0.03), M.dark, [1.86, 0.53, 0.12]),
+  mesh(rbox(0.12, 0.16, 0.50, 0.04), M.trim, [1.58, 0.98, 0.12]),
+  mesh(rbox(0.06, 0.18, 0.50, 0.02), M.alu, [2.08, 0.78, 0.12]),
+  mesh(rbox(0.30, 0.14, 0.26, 0.04), M.trim, [2.02, 1.00, 0.56]),
+  mesh(new THREE.CylinderGeometry(0.19, 0.22, 0.46, 32), M.alu, [1.50, 0.62, 0.02], [0, 0, Math.PI / 2]),
+  cylZ(0.07, 0.03, M.steel, [1.92, 0.62, 0.43]),
+  cylZ(0.05, 0.05, M.steel, [1.80, 0.88, 0.43]));
+for (const z of [-0.06, 0.06, 0.18, 0.30]) {
+  engine.add(mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.07, 12), M.caliper, [1.88, 1.12, z]));
+  engine.add(cylBetween([1.64, 1.03, z], [1.76, 0.97, z], 0.026, M.trim));
+}
+engine.position.y = -0.05;
+part(engine, 'engine', [[[0.25, 0.40, 0], 0.50, 0.74]]);
+
+/* Cooling: radiator and twin fans */
+const cooling = new THREE.Group(), fans = [];
+put(cooling,
+  mesh(rbox(0.05, 0.44, 1.30, 0.01), M.fin, [2.30, 0.76, 0]),
+  mesh(rbox(0.04, 0.42, 1.0, 0.01), M.trim, [2.255, 0.76, 0]),
+  tube([[2.28, 0.98, 0.40], [2.20, 1.04, 0.36], [2.08, 0.97, 0.26]], 0.024, M.trim, 24),
+  tube([[2.28, 0.56, -0.30], [2.18, 0.52, -0.20], [2.08, 0.58, -0.06]], 0.024, M.trim, 24));
+for (const s of [1, -1]) cooling.add(mesh(rbox(0.07, 0.46, 0.06, 0.015), M.trim, [2.30, 0.76, s * 0.68]));
+for (const z of [0.25, -0.25]) {
+  const f = new THREE.Group(); f.position.set(2.215, 0.76, z);
+  f.add(mesh(new THREE.TorusGeometry(0.17, 0.01, 8, 40), M.trim, [0, 0, 0], [0, Math.PI / 2, 0]));
+  f.add(cylX(0.045, 0.05, M.trim, [0, 0, 0]));
+  for (let i = 0; i < 7; i++) {
+    const a = i / 7 * Math.PI * 2;
+    const b = mesh(rbox(0.01, 0.13, 0.055, 0.004), M.trim, [0, Math.cos(a) * 0.1, Math.sin(a) * 0.1]);
+    b.rotation.set(-a, 0.45, 0, 'XYZ');
+    f.add(b);
+  }
+  cooling.add(f); fans.push(f);
+}
+part(cooling, 'cooling', [[[0.62, 0.12, 0], 0.48, 0.70]]);
+
+/* Battery pack under the rear seat */
+const battery = new THREE.Group();
+battery.add(mesh(rbox(0.94, 0.10, 0.62, 0.02), M.pack, [-0.80, 0.58, 0]));
+for (let i = 0; i < 6; i++) for (const z of [-0.14, 0.14])
+  battery.add(mesh(rbox(0.13, 0.035, 0.22, 0.01), M.dark, [-1.20 + i * 0.16, 0.645, z]));
+for (const z of [-0.14, 0.14]) battery.add(mesh(rbox(0.88, 0.012, 0.025, 0.005), M.hv, [-0.80, 0.668, z]));
+battery.add(tube([[-0.33, 0.62, -0.24], [0.4, 0.62, -0.40], [1.2, 0.70, -0.45], [1.55, 0.84, -0.40], [1.68, 0.96, -0.38]], 0.018, M.hv, 64));
+part(battery, 'battery', [[[0, -0.62, 0], 0.66, 0.88]]);
+
+/* Exhaust: manifold pipe, catalyst, muffler, tailpipe */
+const exhaust = new THREE.Group();
+put(exhaust,
+  tube([[2.02, 0.60, 0.30], [1.78, 0.40, 0.32], [1.40, 0.31, 0.40], [0.60, 0.30, 0.44], [-1.70, 0.30, 0.44], [-1.95, 0.32, 0.36]], 0.028, M.steel, 96),
+  cylX(0.08, 0.34, M.alu, [1.12, 0.31, 0.42]),
+  mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.62, 32), M.steel, [-2.05, 0.36, 0.10], [Math.PI / 2, 0, 0]),
+  tube([[-2.10, 0.34, -0.15], [-2.35, 0.33, -0.24], [-2.62, 0.33, -0.30]], 0.03, M.steel, 20),
+  cylX(0.04, 0.10, M.chrome, [-2.66, 0.33, -0.30]));
+exhaust.children[2].scale.set(1, 1, 0.7);
+part(exhaust, 'exhaust', [[[-0.12, -0.26, 0], 0.72, 0.92]]);
+
+/* Interior: two seat rows, dashboard, steering wheel */
+const interior = new THREE.Group();
+function seat(x, z, w, opts = {}) {
+  put(interior,
+    mesh(rbox(0.52, 0.13, w, 0.05), M.seat, [x, 0.70, z]),
+    mesh(rbox(0.40, 0.02, w * 0.62, 0.01), M.seatIn, [x + 0.02, 0.775, z]),
+    mesh(rbox(0.13, 0.66, w, 0.05), M.seat, [x - 0.25, 1.07, z], [0, 0, 0.17]),
+    mesh(rbox(0.02, 0.46, w * 0.62, 0.01), M.seatIn, [x - 0.175, 1.07, z], [0, 0, 0.17]),
+    mesh(rbox(0.40, 0.10, w * 0.8, 0.02), M.dark, [x, 0.59, z]));
+  for (const hz of (opts.heads ?? [z])) interior.add(mesh(rbox(0.09, 0.17, Math.min(w * 0.55, 0.28), 0.04), M.seat, [x - 0.33, 1.50, hz], [0, 0, 0.17]));
+}
+seat(0.40, 0.42, 0.52); seat(0.40, -0.42, 0.52);
+seat(-0.80, 0, 1.56, { heads: [-0.52, 0, 0.52] });
+put(interior,
+  mesh(rbox(0.40, 0.24, 1.72, 0.06), M.trim, [0.94, 1.00, 0]),
+  mesh(rbox(0.28, 0.05, 1.72, 0.02), M.seatIn, [0.90, 1.14, 0]),
+  mesh(rbox(0.02, 0.15, 0.40, 0.008), M.screen, [0.74, 1.08, 0.05], [0, 0, 0.25]),
+  mesh(rbox(0.56, 0.18, 0.20, 0.04), M.trim, [0.42, 0.74, 0]),
+  mesh(rbox(1.10, 0.04, 1.62, 0.02), M.dark, [-1.75, 0.64, 0]));
+{
+  const sw = new THREE.Group(); sw.position.set(0.66, 1.03, -0.42); sw.rotation.z = 0.35;
+  sw.add(mesh(new THREE.TorusGeometry(0.16, 0.022, 10, 40), M.trim, [0, 0, 0], [0, Math.PI / 2, 0]));
+  sw.add(mesh(rbox(0.03, 0.10, 0.10, 0.015), M.trim, [0.0, 0, 0]));
+  interior.add(sw);
+  interior.add(cylBetween([0.68, 1.02, -0.42], [0.84, 0.96, -0.42], 0.025, M.trim));
+}
+part(interior, 'interior', [[[0, 3.5, 0], 0.32, 0.62]]);
+
+
+/* ---------- scroll timeline ---------- */
+const STOPS = [
+  new Set(['engine', 'cooling']),
+  new Set(['brakes', 'suspension']),
+  new Set(['battery']),
+  new Set(['exhaust']),
+  new Set(['body', 'interior']),
+];
+function timeline(p) {
+  let t = 0, stop = -1;
+  if (p < 0.08) t = 0;
+  else if (p < 0.30) t = (p - 0.08) / 0.22;
+  else if (p < 0.80) { t = 1; stop = Math.min(4, Math.floor((p - 0.30) / 0.10)); }
+  else if (p < 0.92) t = 1 - (p - 0.80) / 0.12;
+  else t = 0;
+  return { t, stop };
+}
+for (const m of meshes) m.userData.op = 1;
+function applyHighlight(stop, dt) {
+  const set = stop >= 0 ? STOPS[stop] : null;
+  const k = reduce ? 1 : 1 - Math.exp(-dt * 7);
+  for (const m of meshes) {
+    const on = !set || set.has(m.userData.system);
+    const target = on ? 1 : 0.07;
+    m.userData.op += (target - m.userData.op) * k;
+    const op = m.userData.op, mat = m.material;
+    const trans = op < 0.995;
+    if (mat.transparent !== trans) { mat.transparent = trans; mat.needsUpdate = true; }
+    mat.opacity = op; mat.depthWrite = op > 0.5; m.castShadow = op > 0.5;
+    if (mat.emissive && m.userData.baseEmissive) {
+      if (set && on) { mat.emissive.copy(accent); mat.emissiveIntensity = 0.22; }
+      else { mat.emissive.copy(m.userData.baseEmissive); mat.emissiveIntensity = m.userData.baseEI; }
+    }
+  }
+}
+
+/* ---------- framing ---------- */
+function resize() {
+  if (!renderer) return;
+  const W = canvas.clientWidth, H = canvas.clientHeight;
+  renderer.setSize(W, H, false);
+  camera.aspect = W / H;
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+resize();
+const tgtA = new THREE.Vector3(0, 0.95, 0), tgtB = new THREE.Vector3(0.15, 2.85, 0), tgt = new THREE.Vector3();
+function frameCamera(p, t) {
+  const W = canvas.clientWidth, H = canvas.clientHeight, narrow = W <= 860;
+  const sideMode = clamp((p - 0.08) / 0.04) * (1 - clamp((p - 0.79) / 0.04));   // text in the left column
+  const heroMode = 1 - clamp((p - 0.02) / 0.08);                                   // big title on top
+  const endMode = clamp((p - 0.80) / 0.04);                                         // centered title on top
+  const topMode = Math.max(heroMode, endMode);
+  // which part of the screen the van should fill
+  let rw = W, rh = H, ox = 0, oy = 0;
+  if (narrow) {
+    rh = H * (0.62 - 0.08 * topMode); oy = (H - rh) / 2 * (sideMode - topMode * 0.9);
+  } else {
+    rw = W * (1 - 0.42 * sideMode); ox = -(W - rw) / 2;
+    rh = H * (1 - 0.46 * topMode); oy = -(H - rh) / 2;
+  }
+  camera.setViewOffset(W, H, ox, oy, W, H);
+  camera.updateProjectionMatrix();
+  const e = ease(Math.min(1, t / 0.6));
+  tgt.copy(tgtA).lerp(tgtB, e);
+  const radius = THREE.MathUtils.lerp(3.0, 4.2, e);
+  const vf = THREE.MathUtils.degToRad(camera.fov);
+  const tanV = Math.tan(vf / 2) * (rh / H), tanH = Math.tan(vf / 2) * (rw / H);
+  const dist = radius / Math.sin(Math.atan(Math.min(tanV, tanH))) * 1.03;
+  const az = 0.72 + p * 3.4 + (reduce ? 0 : idle);
+  const el = 0.30 + 0.16 * e;
+  camera.position.set(tgt.x + dist * Math.cos(el) * Math.cos(az), tgt.y + dist * Math.sin(el), tgt.z + dist * Math.cos(el) * Math.sin(az));
+  camera.lookAt(tgt);
+}
+
+/* ---------- loop ---------- */
+let pSmooth = 0, idle = 0, last = performance.now();
+function loop(now) {
+  const raw = Math.min((now - last) / 1000, 0.5), dt = Math.min(raw, 0.05); last = now;
+  pageParallax(); historyScroll(); safetyScroll();
+
+  const r = teardown.getBoundingClientRect();
+  const visible = r.bottom > 0 && r.top < innerHeight;
+  const p = clamp(-r.top / (r.height - innerHeight));
+  pSmooth = reduce ? p : pSmooth + (p - pSmooth) * (1 - Math.exp(-raw * 9));   // time-based, so slow devices keep up
+  for (const L of layers) {
+    const [a, b] = L.r, fade = Math.min(0.02, (b - a) * 0.2);
+    const op = clamp(Math.min((pSmooth - a) / fade, (b - pSmooth) / fade));
+    const a2 = Math.max(a, 0), b2 = Math.min(b, 1), local = (pSmooth - a2) / (b2 - a2);
+    L.el.style.opacity = op.toFixed(3);
+    L.el.style.visibility = op <= 0.001 ? 'hidden' : 'visible';
+    const y = reduce ? 0 : (0.5 - clamp(local)) * 60;
+    const base = L.el.classList.contains('side') && innerWidth > 860 ? 'translateY(-50%) ' : L.el.classList.contains('cue') ? 'translateX(-50%) ' : '';
+    L.el.style.transform = `${base}translate3d(0, ${y.toFixed(1)}px, 0)`;
+  }
+  const { t, stop } = timeline(pSmooth);
+  railItems.forEach((li, i) => li.classList.toggle('on', i === stop));
+  rail.style.opacity = clamp(Math.min((pSmooth - 0.28) / 0.02, (0.81 - pSmooth) / 0.02));
+
+  if (renderer && visible) {
+    if (!reduce) { idle += dt * 0.05; for (const f of fans) f.rotation.x += dt * (2 + 10 * t); }
+    updateParts(t);
+    applyHighlight(stop, raw);
+    frameCamera(pSmooth, t);
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
